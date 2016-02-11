@@ -126,7 +126,7 @@ public class BinaryHeap<T> implements PQ<T> {
 	 *            index of element as in pq[] array that violates heap order
 	 *            property with parent
 	 */
-	private void percolateUp(int i) {
+	protected void percolateUp(int i) {
 		pq[0] = pq[i]; // for edge case: pq[i] beats every element in the heap
 		while (c.compare(pq[i / 2], pq[0]) > 0) {
 			pq[i] = pq[i / 2]; // percolate the hole up to its parent
@@ -143,7 +143,7 @@ public class BinaryHeap<T> implements PQ<T> {
 	 *            index of element as in pq[] array that violates heap order
 	 *            property with children
 	 */
-	private void percolateDown(int i) {
+	protected void percolateDown(int i) {
 		int child;
 		T temp = pq[i];
 		while (i * 2 <= size) { // still have children
