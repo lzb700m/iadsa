@@ -187,6 +187,38 @@ public class BinaryHeap<T> implements PQ<T> {
 		pq = (T[]) newArray;
 	}
 
+	/**
+	 * sort array A[1..n]. A[0] is not used. Sorted order depends on comparator
+	 * used to buid heap. min heap ==> descending order max heap ==> ascending
+	 * order
+	 */
+	public static <T> void heapSort(T[] A, Comparator<T> comp) {
+
+		BinaryHeap<T> heap = new BinaryHeap<T>(A, comp);
+		T temp;
+
+		/*
+		 * Loop invariant: i is at the last element of the heap, everything in
+		 * pq[] after i is sorted
+		 */
+		for (int i = heap.size; i > 0; i--) {
+			// exchange pq[1] and pq[i]
+			temp = heap.pq[1];
+			heap.pq[1] = heap.pq[i];
+			heap.pq[i] = temp;
+
+			heap.size--;
+			heap.percolateDown(1);
+		}
+	}
+
+	/**
+	 * Driver function for testing
+	 * 
+	 * @param args
+	 *            argument - input file of list of integers
+	 * @throws FileNotFoundException
+	 */
 	public static void main(String[] args) throws FileNotFoundException {
 		Scanner in;
 
@@ -198,17 +230,13 @@ public class BinaryHeap<T> implements PQ<T> {
 		}
 
 		List<Integer> list = new ArrayList<Integer>();
+		list.add(0, 0); // add an dummy value at start
 		while (in.hasNextInt()) {
 			list.add(in.nextInt());
 		}
 		in.close();
 
-		list.add(0, 0);
 		Integer[] array = list.toArray(new Integer[list.size()]);
-		for (int i = 1; i < array.length; i++) {
-			System.out.print(array[i] + ", ");
-		}
-		System.out.println();
 
 		Comparator<Integer> comparator = new Comparator<Integer>() {
 			@Override
@@ -217,30 +245,11 @@ public class BinaryHeap<T> implements PQ<T> {
 			}
 		};
 
+		Long start = System.currentTimeMillis();
 		heapSort(array, comparator);
+		Long end = System.currentTimeMillis();
 
-		for (int i = 1; i < array.length; i++) {
-			System.out.print(array[i] + ", ");
-		}
-
-	}
-
-	/**
-	 * sort array A[1..n]. A[0] is not used. Sorted order depends on comparator
-	 * used to buid heap. min heap ==> descending order max heap ==> ascending
-	 * order
-	 */
-	public static <T> void heapSort(T[] A, Comparator<T> comp) {
-
-		BinaryHeap<T> heap = new BinaryHeap<T>(A, comp);
-		for (int i = heap.size; i > 0; i--) {
-			// exchange pq[1] and pq[i]
-			T temp = heap.pq[1];
-			heap.pq[1] = heap.pq[i];
-			heap.pq[i] = temp;
-
-			heap.size--;
-			heap.percolateDown(1);
-		}
+		System.out.println("Heap sort running time for " + (array.length - 1)
+				+ " elements: " + (end - start) + " ms.");
 	}
 }
