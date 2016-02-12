@@ -15,11 +15,12 @@ import java.util.Scanner;
 
 public class BinaryHeap<T> implements PQ<T> {
 
-	private static final double RESIZE_FACTOR = 1.5;
+	private static final double RESIZE_FACTOR = 2;
 
 	T[] pq; // internal array to store objects, pq[0] is not used
 	Comparator<T> c; // passed c decides heap order (min or max)
-	int size; // actual number of element in the heap (size <= pq.length - 1)
+	int size; // actual number of element in the heap (size <=
+				// pq.length - 1)
 
 	/**
 	 * Build a priority queue with a given array q
@@ -47,7 +48,7 @@ public class BinaryHeap<T> implements PQ<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	BinaryHeap(int n, Comparator<T> comp) {
-		pq = (T[]) new Object[n];
+		pq = (T[]) new Object[n + 1];
 		c = comp;
 		size = 0;
 	}
@@ -77,7 +78,7 @@ public class BinaryHeap<T> implements PQ<T> {
 		if (size == pq.length - 1) {
 			resize(); // in case pq is full
 		}
-		pq[++size] = x;
+		assign(++size, x);
 		percolateUp(size);
 	}
 
@@ -89,7 +90,7 @@ public class BinaryHeap<T> implements PQ<T> {
 			return null; // heap is already empty
 		}
 		T min = pq[1];
-		pq[1] = pq[size--];
+		assign(1, pq[size--]);
 		percolateDown(1);
 		return min;
 	}
@@ -102,6 +103,13 @@ public class BinaryHeap<T> implements PQ<T> {
 			return null; // heap is already empty
 		}
 		return pq[1];
+	}
+
+	/**
+	 * Return true is heap is empty
+	 */
+	public boolean isEmpty() {
+		return size == 0;
 	}
 
 	/**
@@ -127,12 +135,13 @@ public class BinaryHeap<T> implements PQ<T> {
 	 *            property with parent
 	 */
 	protected void percolateUp(int i) {
-		pq[0] = pq[i]; // for edge case: pq[i] beats every element in the heap
+		assign(0, pq[i]); // for edge case: pq[i] beats every element in the
+							// heap
 		while (c.compare(pq[i / 2], pq[0]) > 0) {
-			pq[i] = pq[i / 2]; // percolate the hole up to its parent
+			assign(i, pq[i / 2]); // percolate the hole up to its parent
 			i /= 2;
 		}
-		pq[i] = pq[0];
+		assign(i, pq[0]);
 	}
 
 	/**
@@ -155,20 +164,20 @@ public class BinaryHeap<T> implements PQ<T> {
 			}
 
 			if (c.compare(temp, pq[child]) > 0) {
-				pq[i] = pq[child]; // percolate down
+				assign(i, pq[child]); // percolate down
 				i = child;
 			} else {
 				break;
 			}
 		}
-		pq[i] = temp;
+		assign(i, temp);
 	}
 
 	/**
 	 * Create a heap. Precondition: none. Build heap order from bottom up,
 	 * starting from the first none leaf node in the heap. RT = O(n)
 	 */
-	private void buildHeap() {
+	protected void buildHeap() {
 		for (int i = size / 2; i > 0; i--) {
 			// from the first none leaf node
 			percolateDown(i);
@@ -179,12 +188,25 @@ public class BinaryHeap<T> implements PQ<T> {
 	 * resize internal array pq when it's full
 	 */
 	@SuppressWarnings("unchecked")
-	private void resize() {
-		Object[] newArray = new Object[(int) (pq.length * RESIZE_FACTOR)];
+	protected void resize() {
+		Object[] newArray = new Object[(int) ((pq.length + 1) * RESIZE_FACTOR)];
 		for (int i = 0; i < pq.length; i++) {
 			newArray[i] = pq[i];
 		}
 		pq = (T[]) newArray;
+	}
+
+	/**
+	 * Assign an element value to the specific index location in the internal
+	 * array pq[]. This method is to be overridden in the IndexedHeap subclass
+	 * 
+	 * @param i
+	 *            index of pq[] to be updated
+	 * @param x
+	 *            value of element to be assigned
+	 */
+	public void assign(int i, T x) {
+		pq[i] = x;
 	}
 
 	/**
@@ -204,8 +226,8 @@ public class BinaryHeap<T> implements PQ<T> {
 		for (int i = heap.size; i > 0; i--) {
 			// exchange pq[1] and pq[i]
 			temp = heap.pq[1];
-			heap.pq[1] = heap.pq[i];
-			heap.pq[i] = temp;
+			heap.assign(1, heap.pq[i]);
+			heap.assign(i, temp);
 
 			heap.size--;
 			heap.percolateDown(1);
@@ -252,4 +274,5 @@ public class BinaryHeap<T> implements PQ<T> {
 		System.out.println("Heap sort running time for " + (array.length - 1)
 				+ " elements: " + (end - start) + " ms.");
 	}
+
 }

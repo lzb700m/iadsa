@@ -20,4 +20,6 @@ public interface PQ<T> {
 	public T remove(); // equivalent to deleteMin()
 
 	public T peek(); // equivalent to min()
+
+	public boolean isEmpty();
 }
