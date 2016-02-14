@@ -3,7 +3,7 @@ package s_prj_0pq;
 /**
  * @author Peng Li
  * 
- * Implementation Prim algorithm of minimum spanning tree
+ * Implementation Prim's algorithm of minimum spanning tree
  */
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,7 +17,7 @@ public class MST {
 	static final int Infinity = Integer.MAX_VALUE;
 
 	/**
-	 * Implementation of Prim algorithm using priority queue of Edges. Running
+	 * Implementation of Prim's algorithm using priority queue of Edges. Running
 	 * time: O(|E|*log(|E|))
 	 * 
 	 * @param g
@@ -65,7 +65,7 @@ public class MST {
 	}
 
 	/**
-	 * Implementation of Prim algorithm using priority queue of Vertices.
+	 * Implementation of Prim's algorithm using priority queue of Vertices.
 	 * Running time: O(|E|*log|V|)
 	 * 
 	 * @param g
@@ -112,6 +112,16 @@ public class MST {
 		return wmst;
 	}
 
+	/**
+	 * Driver function to demonstrate running time difference of Prim1 and Prim2
+	 * implementation: on a large input (10000 vertices, 9070678 edges) : Prim1
+	 * (priority queue of edges): 4032 ms. Prim2 (indexed priority queue of
+	 * vertices): 636 ms.
+	 * 
+	 * @param args
+	 *            input file path
+	 * @throws FileNotFoundException
+	 */
 	public static void main(String[] args) throws FileNotFoundException {
 		Scanner in = new Scanner(new File(args[0]));
 		// Scanner in = new Scanner(System.in);

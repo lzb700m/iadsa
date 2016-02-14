@@ -31,7 +31,7 @@ public class BinaryHeap<T> implements PQ<T> {
 	 * @param comp
 	 *            comparator object to decide heap order (minHeap or maxHeap)
 	 */
-	BinaryHeap(T[] q, Comparator<T> comp) {
+	public BinaryHeap(T[] q, Comparator<T> comp) {
 		size = q.length - 1;
 		pq = q;
 		c = comp;
@@ -39,7 +39,8 @@ public class BinaryHeap<T> implements PQ<T> {
 	}
 
 	/**
-	 * Create an empty priority queue of given maximum size
+	 * Create an empty priority queue of given maximum capacity (not actual
+	 * size), the capacity can be extended later during insert() operation
 	 * 
 	 * @param n
 	 *            capacity of the heap without resizing
@@ -47,23 +48,23 @@ public class BinaryHeap<T> implements PQ<T> {
 	 *            comparator object to decide heap order (minHeap or maxHeap)
 	 */
 	@SuppressWarnings("unchecked")
-	BinaryHeap(int n, Comparator<T> comp) {
-		pq = (T[]) new Object[n + 1];
+	public BinaryHeap(int n, Comparator<T> comp) {
+		pq = (T[]) new Object[n + 1]; // pq[0] not reserved for actual elements
 		c = comp;
 		size = 0;
 	}
 
-	/** wrapper, equivalent to add(T x) method */
+	/** wrapper function, equivalent to add(T x) method */
 	public void insert(T x) {
 		add(x);
 	}
 
-	/** wrapper, equivalent to remove() method */
+	/** wrapper function, equivalent to remove() method */
 	public T deleteMin() {
 		return remove();
 	}
 
-	/** wrapper, equivalent to peek() method */
+	/** wrapper function, equivalent to peek() method */
 	public T min() {
 		return peek();
 	}
@@ -78,8 +79,8 @@ public class BinaryHeap<T> implements PQ<T> {
 		if (size == pq.length - 1) {
 			resize(); // in case pq is full
 		}
-		assign(++size, x);
-		percolateUp(size);
+		assign(++size, x); // keep heap structural property
+		percolateUp(size); // recover heap order property
 	}
 
 	/**
@@ -90,13 +91,13 @@ public class BinaryHeap<T> implements PQ<T> {
 			return null; // heap is already empty
 		}
 		T min = pq[1];
-		assign(1, pq[size--]);
-		percolateDown(1);
+		assign(1, pq[size--]);// keep heap structural property
+		percolateDown(1); // recover heap order property
 		return min;
 	}
 
 	/**
-	 * Return the minimum element from binary heap withou deleting it
+	 * Return the minimum element from binary heap without deleting it
 	 */
 	public T peek() {
 		if (size == 0) {
@@ -154,7 +155,7 @@ public class BinaryHeap<T> implements PQ<T> {
 	 */
 	protected void percolateDown(int i) {
 		int child;
-		T temp = pq[i];
+		T temp = pq[i]; // for later retrieval
 		while (i * 2 <= size) { // still have children
 			child = i * 2; // the left child
 
@@ -189,6 +190,7 @@ public class BinaryHeap<T> implements PQ<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	protected void resize() {
+		// add 1 to original length to avoid zero multiplication
 		Object[] newArray = new Object[(int) ((pq.length + 1) * RESIZE_FACTOR)];
 		for (int i = 0; i < pq.length; i++) {
 			newArray[i] = pq[i];
@@ -221,7 +223,7 @@ public class BinaryHeap<T> implements PQ<T> {
 
 		/*
 		 * Loop invariant: i is at the last element of the heap, everything in
-		 * pq[] after i is sorted
+		 * pq[] after i is sorted and are not part of the heap
 		 */
 		for (int i = heap.size; i > 0; i--) {
 			// exchange pq[1] and pq[i]

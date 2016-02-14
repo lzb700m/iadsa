@@ -21,5 +21,5 @@ public interface PQ<T> {
 
 	public T peek(); // equivalent to min()
 
-	public boolean isEmpty();
+	public boolean isEmpty(); // return true if PQ is empty, false otherwise
 }

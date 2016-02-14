@@ -1,7 +1,7 @@
 package s_prj_0pq;
 
 /**
- * Subclass for BinaryHeap that include update index function of the element
+ * Subclass for BinaryHeap that keep tracking of index of element in the heap
  * 
  * @author Peng Li
  */
@@ -11,9 +11,18 @@ package s_prj_0pq;
 import java.util.Comparator;
 
 public class IndexedHeap<T extends Index> extends BinaryHeap<T> {
+
 	/** Build a priority queue with a given array q */
-	IndexedHeap(T[] q, Comparator<T> comp) {
+	public IndexedHeap(T[] q, Comparator<T> comp) {
 		super(q, comp);
+		/*
+		 * assign() function may not be called on all element in the pq, run
+		 * putIndex() on all element after heap order is established to ensure
+		 * correctness.
+		 */
+		for (int i = 1; i < q.length; i++) {
+			q[i].putIndex(i);
+		}
 	}
 
 	/** Create an empty priority queue of given maximum size */
@@ -36,25 +45,4 @@ public class IndexedHeap<T extends Index> extends BinaryHeap<T> {
 		 */
 		x.putIndex(i);
 	}
-	//
-	// public static void main(String[] args) throws FileNotFoundException {
-	// Scanner in = new Scanner(System.in);
-	// Graph g = Graph.readGraph(in, false);
-	// Vertex comp = new Vertex();
-	//
-	// PQ<Vertex> pq = new IndexedHeap<Vertex>(g.verts.size(), comp);
-	//
-	// int i = 100;
-	// for (Vertex v : g) {
-	// v.d = i--;
-	// }
-	//
-	// for (Vertex v : g) {
-	// pq.insert(v);
-	// }
-	//
-	// for (Vertex v : g) {
-	// System.out.println(v.index + ", " + v.d);
-	// }
-	// }
 }
