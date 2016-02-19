@@ -1,4 +1,5 @@
 package common;
+
 /**
  * Timer class for roughly calculating running time of programs
  * 
@@ -9,7 +10,7 @@ package common;
 public class Timer {
 	long startTime, endTime, elapsedTime, memAvailable, memUsed;
 
-	Timer() {
+	public Timer() {
 		startTime = System.currentTimeMillis();
 	}
 
