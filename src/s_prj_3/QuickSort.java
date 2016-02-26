@@ -224,24 +224,18 @@ public class QuickSort {
 		 * Comparable interface
 		 */
 		Integer[] input = list.toArray(new Integer[list.size()]);
-		timer.start();
-		sQuickSort(input);
-		timer.end();
-		System.out.println(isSorted(input));
-		System.out.println("Quick sort with single pivot:");
-		System.out.println(timer);
-
 		// timer.start();
-		// dQuickSort(input);
+		// sQuickSort(input);
 		// timer.end();
 		// System.out.println(isSorted(input));
-		// System.out.println("Quick sort with dual pivot:");
+		// System.out.println("Quick sort with single pivot:");
 		// System.out.println(timer);
 
-		// Integer[] temp = new Integer[input.length];
-		// timer.start();
-		// s_prj_0.SortComparison.mergeSort(input, temp);
-		// timer.end();
-		// System.out.println(timer);
+		timer.start();
+		dQuickSort(input);
+		timer.end();
+		System.out.println(isSorted(input));
+		System.out.println("Quick sort with dual pivot:");
+		System.out.println(timer);
 	}
 }

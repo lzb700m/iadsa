@@ -157,13 +157,13 @@ public class Fibonacci {
 	 */
 	public static void main(String[] args) {
 		timer.start();
-		System.out.println(linearFibonacci(1000000000, MOD_DIVISOR));
+		linearFibonacci(1000000000, MOD_DIVISOR);
 		timer.end();
-		System.out.println(timer);
+		System.out.println("Running time for O(n) implementation: " + timer);
 
 		timer.start();
-		System.out.println(logFibonacci(1000000000, MOD_DIVISOR));
+		logFibonacci(1000000000, MOD_DIVISOR);
 		timer.end();
-		System.out.print(timer);
+		System.out.print("Running time for O(logn) implementation: " + timer);
 	}
 }
