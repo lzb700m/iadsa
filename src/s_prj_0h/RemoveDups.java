@@ -19,10 +19,19 @@ import java.util.Set;
  */
 public class RemoveDups {
 	public static <T> int findDistinct(T[] arr) {
-		Set<T> uniques = new HashSet<>(); // set of unique object
-		Queue<Integer> dupPos = new LinkedList<>(); // queue of index of
-													// duplicates
+		// uniques: set of unique object
+		// dupPos: queue of index of duplicate object in arr
 
+		Set<T> uniques = new HashSet<>();
+		Queue<Integer> dupPos = new LinkedList<>();
+
+		// if arr[i] does not have duplicate object so far, put object arr[i] in
+		// uniques set, and exchange it with the first available position that
+		// contains a duplicate object, no exchange necessary if no duplicates
+		// found so far.
+		//
+		// if arr[i] has duplicate, put the index if arr[i] into the queue
+		// dupPos
 		for (int i = 0; i < arr.length; i++) {
 			if (!uniques.contains(arr[i])) {
 				uniques.add(arr[i]);

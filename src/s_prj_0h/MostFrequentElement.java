@@ -19,7 +19,7 @@ import common.Timer;
  * that sorts the array with Arrays.sort and then finds the element, with a
  * solution using HashMap that runs in O(n) expected time.
  * 
- * @author LiP
+ * @author Peng Li
  *
  */
 public class MostFrequentElement {
