@@ -34,11 +34,7 @@ public class C {
 			// smallest order
 			left = 0;
 			right = n - 1;
-			while (left < right) {
-				swap(data, left, right);
-				left++;
-				right--;
-			}
+			reverse(data, left, right);
 			return data;
 		}
 
@@ -52,11 +48,7 @@ public class C {
 		swap(data, left, right);
 		left = left + 1;
 		right = n - 1;
-		while (left < right) {
-			swap(data, left, right);
-			left++;
-			right--;
-		}
+		reverse(data, left, right);
 		return data;
 	}
 
@@ -67,19 +59,28 @@ public class C {
 		data[j] = temp;
 	}
 
+	// helper reverse function
+	private static <T> void reverse(T[] data, int left, int right) {
+		while (left < right) {
+			swap(data, left, right);
+			left++;
+			right--;
+		}
+	}
+
 	/**
 	 * Driver program for testing
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		int n = 5;
+		int n = 4;
 		Integer[] data = new Integer[n];
 		for (int i = 0; i < n; i++) {
 			data[i] = i + 1;
 		}
 
-		for (int i = 0; i < 120; i++) {
+		for (int i = 0; i < 25; i++) {
 			System.out.format("%3d", i + 1);
 			System.out.println(": " + Arrays.toString(data));
 			data = nextPermutation(data);

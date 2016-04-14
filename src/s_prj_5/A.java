@@ -127,8 +127,8 @@ public class A {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		int n = 10;
-		int k = 3;
+		int n = 13;
+		int k = 2;
 		boolean[] A = new boolean[n];
 		Arrays.fill(A, false);
 
@@ -138,14 +138,14 @@ public class A {
 		}
 
 		timer.start();
-		combination(data, A, n, k);
+		// combination(data, A, n, k);
 		timer.end();
 		System.out.println("Combination: " + timer + "\n");
-
+		System.out.println("n = " + n);
 		timer.start();
 		permutation(data, n);
 		timer.end();
-		System.out.println("Permutataion: " + timer + "\n");
+		System.out.println("Take 2 Permutataion: " + timer + "\n");
 
 		timer.start();
 		permutationHeaps(data, n);
